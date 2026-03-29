@@ -47,8 +47,8 @@ def transcribe():
         segments, info = model.transcribe(
             tmp_path,
             language="en",
-            beam_size=5,
-            vad_filter=True,           # фильтр тишины
+            beam_size=1,
+            vad_filter=True,
             vad_parameters=dict(
                 min_silence_duration_ms=500
             )
@@ -69,6 +69,10 @@ def transcribe():
         except Exception:
             pass
 
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
