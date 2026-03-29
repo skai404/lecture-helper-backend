@@ -21,7 +21,7 @@ def transcribe_preflight():
 # Загружаем модель один раз при старте сервера
 # "base" - баланс скорости и точности. Можно "small" для лучшей точности
 print("Loading Whisper model...")
-model = WhisperModel("base", device="cpu", compute_type="int8")
+model = WhisperModel("tiny", device="cpu", compute_type="int8")
 print("Model loaded!")
 
 
