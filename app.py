@@ -5,7 +5,18 @@ from flask_cors import CORS
 from faster_whisper import WhisperModel
 
 app = Flask(__name__)
-CORS(app)  # разрешаем запросы с GitHub Pages
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=False)
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    return response
+
+@app.route("/transcribe", methods=["OPTIONS"])
+def transcribe_preflight():
+    return "", 204
 
 # Загружаем модель один раз при старте сервера
 # "base" - баланс скорости и точности. Можно "small" для лучшей точности
